@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORꓷLE</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: black;
+            margin: 0px 550px 20px 550px;
+            overflow: hidden;
+        }
+
+        .heading-container {
+            display: flex;
+            color: #950740;
+            border-bottom: #950740 solid 2px;
+            margin-bottom: 170px;
+            margin-top: 0px;
+            margin-left: 200px;
+            margin-right: 250px;
+            text-align: center;
+        }
+
+        h1 {
+            flex: 1;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        span {
+            margin-top: 22px;
+            font-size: xx-large;
+        }
+
+        #board {
+            display: grid;
+            margin-left: 210px;
+            width: 600px;
+        }
+
+        .input-box {
+            background-color: white;
+            border-color: black;
+            border-radius: 10px;
+            text-align: center;
+            color: black;
+            height: 60px;
+            width: 60px;
+            margin-right: 2px;
+            margin-top: 2px;
+            font-size: xx-large;
+            transition: box-shadow 0.1s;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .input-box:hover {
+            box-shadow: 0px 0px 20px #950740;
+            z-index: 1000;
+        }
+
+
+        #keyboard {
+            margin: 150px 8px;
+            user-select: none;
+        }
+
+        .row {
+            display: flex;
+            width: 100%;
+            margin: 0 auto 8px;
+            touch-action: manipulation;
+        }
+
+        button {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: bold;
+            border: 0;
+            margin: 0 6px 0 0;
+            height: 60px;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            background-color: #950740;
+            color: black;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: uppercase;
+        }
+
+
+        button:focus {
+            outline: none;
+        }
+
+        button.fade {
+            transition: background-color 0.1s ease, color 0.1s ease;
+        }
+
+        button:last-of-type {
+            margin: 0;
+        }
+
+        .half {
+            flex: 0.5;
+        }
+
+        .one {
+            flex: 1;
+        }
+
+        .one-and-a-half {
+            flex: 1.5;
+            font-weight: 300;
+            font-size: 20px;
+        }
+
+        .two {
+            flex: 2;
+        }
+
+        .game-lost {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: larger;
+            text-align: center;
+            color: #950740;
+            text-transform: uppercase;
+        }
+
+        .win {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: xx-large;
+            text-transform: uppercase;
+            text-align: center;
+            color: #950740;
+        }
+
+        .message-container {
+            border: #950740 2px solid;
+
+        }
+
+        .win-lose {
+            font-size: 90px;
+        }
+
+        .restart {
+            width: 250px;
+            height: 50px;
+            line-height: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            background: #333;
+            text-align: center;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 3px solid #333;
+            transition: all .35s;
+            margin-left: 270px !important;
+        }
+
+        .restart:hover {
+            width: 200px;
+            border: 3px solid black;
+            background: transparent;
+            color: #950740;
+            margin-left: 300px !important;
+        }
+    </style>
+    <div class="heading-container">
+        <h1>WORꓷLE</h1>
+    </div>
+
+    <div class="lost" id="loser">
+        <div class="message-container">
+            <p class="game-lost win-lose" id="you-lost">YOU LOST!</p>
+            <p class="game-lost">The correct word was: <span id="right-word"></span></p>
+            <p class="game-lost">Would you like to try again? </p>
+            <button class="restart">Restart</button>
+        </div>
+    </div>
+
+
+    <div id="winner">
+        <div class="message-container">
+            <div class="win" id="winner">
+                <p class="win win-lose">YOU WON!</p>
+                <p class="win">Attempts: <span id="attempt"></span></p>
+                <button class="restart">Restart</button>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="game">
+        <div id="board">
+            <div class="row 1">
+                <input type="text" class="input-box row-1" id="1" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-1" id="2" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-1" id="3" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-1" id="4" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-1" id="5" maxlength="1" minlength="1">
+            </div>
+            <div class="row 2">
+                <input type="text" class="input-box row-2" id="6" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-2" id="7" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-2" id="8" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-2" id="9" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-2" id="10" maxlength="1" minlength="1">
+            </div>
+            <div class="row 3">
+                <input type="text" class="input-box row-3" id="11" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-3" id="12" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-3" id="13" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-3" id="14" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-3" id="15" maxlength="1" minlength="1">
+            </div>
+            <div class="row 4">
+                <input type="text" class="input-box row-4" id="16" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-4" id="17" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-4" id="18" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-4" id="19" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-4" id="20" maxlength="1" minlength="1">
+            </div>
+            <div class="row 5">
+                <input type="text" class="input-box row-5" id="21" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-5" id="22" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-5" id="23" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-5" id="24" maxlength="1" minlength="1">
+                <input type="text" class="input-box row-5" id="25" maxlength="1" minlength="1">
+            </div>
+        </div>
+
+
+        <div id="keyboard">
+            <div class="row">
+                <button class="letter" data-key="q" id="q">q</button>
+                <button class="letter" data-key="w" id="w">w</button>
+                <button class="letter" data-key="e" id="e">e</button>
+                <button class="letter" data-key="r" id="r">r</button>
+                <button class="letter" data-key="t" id="t">t</button>
+                <button class="letter" data-key="y" id="y">y</button>
+                <button class="letter" data-key="u" id="u">u</button>
+                <button class="letter" data-key="i" id="i">i</button>
+                <button class="letter" data-key="o" id="o">o</button>
+                <button class="letter" data-key="p" id="p">p</button>
+            </div>
+            <div class="row">
+                <div class="spacer half"></div>
+                <button class="letter" data-key="a" id="a">a</button>
+                <button class="letter" data-key="s" id="s">s</button>
+                <button class="letter" data-key="d" id="d">d</button>
+                <button class="letter" data-key="f" id="f">f</button>
+                <button class="letter" data-key="g" id="g">g</button>
+                <button class="letter" data-key="h" id="h">h</button>
+                <button class="letter" data-key="j" id="j">j</button>
+                <button class="letter" data-key="k" id="k">k</button>
+                <button class="letter" data-key="l" id="l">l</button>
+                <div class="spacer half"></div>
+            </div>
+            <div class="row">
+                <button data-key="↵" class="one-and-a-half" id="enter">↵</button>
+                <button class="letter" data-key="z" id="z">z</button>
+                <button class="letter" data-key="x" id="x">x</button>
+                <button class="letter" data-key="c" id="c">c</button>
+                <button class="letter" data-key="v" id="v">v</button>
+                <button class="letter" data-key="b" id="b">b</button>
+                <button class="letter" data-key="n" id="n">n</button>
+                <button class="letter" data-key="m" id="m">m</button>
+                <button data-key="←" class="one-and-a-half" id="backspace">←</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        let line = 1
+        let selectedWord = select()
+        const row1 = document.getElementsByClassName("row-1")
+        const row2 = document.getElementsByClassName("row-2")
+        const row3 = document.getElementsByClassName("row-3")
+        const row4 = document.getElementsByClassName("row-4")
+        const row5 = document.getElementsByClassName("row-5")
+        const backspace = document.getElementById("backspace")
+        const submit = document.getElementById("enter")
+
+        //set up backspace key
+        document.getElementById("loser").style.display = "none"
+        document.getElementById("winner").style.display = "none"
+
+
+
+        function select() {
+            const listOfWords = ["price", "sheet", "smell", "boxes", "raise", "match", "truth", "roads", "threw", "enemy", "lunch", "chart", "scene", "graph", "doubt", "guide", "winds", "block", "grain", "smoke", "mixed", "games", "wagon", "sweet", "topic", "extra", "plate", "title", "knife", "fence", "falls", "cloud", "wheat", "plays", "enter", "broad", "steam", "atoms", "press", "lying", "basis", "clock", "taste", "grows", "thank", "storm", "agree", "brain", "track", "smile", "funny", "beach", "stock", "hurry", "saved", "sorry", "giant", "trail", "offer", "ought", "rough", "daily", "avoid", "keeps", "throw", "allow", "cream", "laugh", "edges", "teach", "frame", "bells", "dream", "magic", "occur", "ended", "chord", "false", "skill", "holes", "dozen", "brave", "apple", "climb", "outer", "pitch", "ruler", "holds", "fixed", "costs", "calls", "blank", "staff", "labor", "eaten", "youth", "tones", "honor", "globe", "gases", "doors", "poles", "loose", "apply", "tears", "exact", "brush", "chest", "layer", "whale", "minor", "faith", "tests", "judge", "items", "worry", "waste", "hoped", "strip", "begun", "aside", "lakes", "bound", "depth", "candy", "event", "worse", "aware", "shell", "rooms", "ranch", "image", "snake", "aloud", "dried", "likes", "motor", "pound", "knees", "refer", "fully", "chain", "shirt", "flour", "drops", "spite", "orbit", "banks", "shoot", "curve", "tribe", "tight", "blind", "slept", "shade", "claim", "flies", "theme", "queen", "fifth", "union", "hence", "straw", "entry", "issue", "birth", "feels", "anger", "brief", "rhyme", "glory", "guard", "flows", "flesh", "owned", "trick", "yours", "sizes", "noted", "width", "burst", "route", "lungs", "uncle", "bears", "royal", "kings", "forty", "trial", "cards", "brass", "opera", "chose", "owner", "vapor", "beats", "mouse", "tough", "wires"]
+            const totalWords = listOfWords.length
+            let selectedWord = listOfWords[Math.floor(Math.random() * totalWords)]
+            console.log(selectedWord)
+            disable()
+            enable(1)
+            return selectedWord
+        }
+
+
+        function checkAnswer(word, selectedWord, line) {
+            let wrongpos = 0
+            let rightpos = 0
+            let noLetter = 0
+            word = word.toLowerCase();
+            
+            if (word.length === selectedWord.length) {
+
+                for (let i = 0; i < word.length; i++) {
+
+                    if (word[i] == selectedWord[i]) {
+                        rightpos++;
+            
+                        document.getElementById(word[i]).style.backgroundColor = "#9ACD32";
+                        document.getElementById(word[i]).style.color = "black";
+                        let a = i + 1
+                        document.getElementById("" + (+a)).style.backgroundColor = "#9ACD32";
+                    } 
+
+                    for (let j = 0; j < word.length; j++) {
+                        if (word[i] === selectedWord[j] && i !== j) {
+                            wrongpos++;
+                            document.getElementById(word[i]).style.backgroundColor = "#FFDB58";
+                            document.getElementById(word[i]).style.color = "black";
+
+                            a = i + 1;
+                            document.getElementById("" + (+a)).style.backgroundColor = "#FFDB58";
+                        }
+                        if (word[i] !== selectedWord[j]) {
+                            noLetter++;
+                        }
+                    }
+                }
+
+                if (rightpos === word.length) {
+                    wrongpos = 0
+                    noLetter = 0
+                    var x = document.getElementById("winner");
+                    if (x.style.display === "none") {
+                        x.style.display = "block"
+                        document.getElementById("game").style.display = "none"
+                        document.getElementById("attempt").innerText = line - 1
+                    }
+                    console.log("correct")
+                } else {
+                    console.log(wrongpos)
+                    noLetter = word.length - (rightpos + wrongpos)
+                }
+
+                if (rightpos !== 5 && line === 6) {
+                    var y = document.getElementById("loser")
+                    if (y.style.display === "none") {
+                        y.style.display = "block"
+                        document.getElementById("game").style.display = "none"
+                        document.getElementById("right-word").innerText = selectedWord
+                    }
+                }
+            }
+        }
+
+
+        //keyboard setup
+        const elem = document.getElementsByClassName("letter")
+        for (let i = 0; i < elem.length; i++) {
+            elem[i].addEventListener("click", (ele) => {
+                const val = ele.target.id
+                if (line === 1) {
+                    if (row1[0].value === "") {
+                        row1[0].value = val
+                    } else if (row1[0].value !== "" && row1[1].value === "") {
+                        row1[1].value = val
+                    } else if (row1[0].value !== "" && row1[1].value !== "" && row1[2].value === "") {
+                        row1[2].value = val
+                    } else if (row1[1].value !== "" && row1[2].value !== "" && row1[3].value === "") {
+                        row1[3].value = val
+                    } else if (row1[2].value !== "" && row1[3].value !== "" && row1[4].value === "") {
+                        row1[4].value = val
+                    }
+                } else if (line === 2) {
+                    if (row2[0].value === "") {
+                        row2[0].value = val
+                    } else if (row2[0].value !== "" && row2[1].value === "") {
+                        row2[1].value = val
+                    } else if (row2[0].value !== "" && row2[1].value !== "" && row2[2].value === "") {
+                        row2[2].value = val
+                    } else if (row2[1].value !== "" && row2[2].value !== "" && row2[3].value === "") {
+                        row2[3].value = val
+                    } else if (row2[2].value !== "" && row2[3].value !== "" && row2[4].value === "") {
+                        row2[4].value = val
+                    }
+                } else if (line === 3) {
+
+                    if (row3[0].value === "") {
+                        row3[0].value = val
+                    } else if (row3[0].value !== "" && row3[1].value === "") {
+                        row3[1].value = val
+                    } else if (row3[0].value !== "" && row3[1].value !== "" && row3[2].value === "") {
+                        row3[2].value = val
+                    } else if (row3[1].value !== "" && row3[2].value !== "" && row3[3].value === "") {
+                        row3[3].value = val
+                    } else if (row3[2].value !== "" && row3[3].value !== "" && row3[4].value === "") {
+                        row3[4].value = val
+                    }
+
+                } else if (line === 4) {
+                    if (row4[0].value === "") {
+                        row4[0].value = val
+                    } else if (row4[0].value !== "" && row4[1].value === "") {
+                        row4[1].value = val
+                    } else if (row4[0].value !== "" && row4[1].value !== "" && row4[2].value === "") {
+                        row4[2].value = val
+                    } else if (row4[1].value !== "" && row4[2].value !== "" && row4[3].value === "") {
+                        row4[3].value = val
+                    } else if (row4[2].value !== "" && row4[3].value !== "" && row4[4].value === "") {
+                        row4[4].value = val
+                    }
+                } else if (line === 5) {
+                    if (row5[0].value === "") {
+                        row5[0].value = val
+                    } else if (row5[0].value !== "" && row5[1].value === "") {
+                        row5[1].value = val
+                    } else if (row5[0].value !== "" && row5[1].value !== "" && row5[2].value === "") {
+                        row5[2].value = val
+                    } else if (row5[1].value !== "" && row5[2].value !== "" && row5[3].value === "") {
+                        row5[3].value = val
+                    } else if (row5[2].value !== "" && row5[3].value !== "" && row5[4].value === "") {
+                        row5[4].value = val
+                    }
+                }
+
+            })
+        }
+
+
+        submit.addEventListener("click", () => {
+            if (line === 1) {
+                const attempt1 = row1[0].value + row1[1].value + row1[2].value + row1[3].value + row1[4].value
+
+                if (attempt1.length === 5) {
+                    line++
+                    disable()
+                    enable(2)
+                    checkAnswer(attempt1, selectedWord, line)
+                }
+
+            } else if (line === 2) {
+                const attempt2 = row2[0].value + row2[1].value + row2[2].value + row2[3].value + row2[4].value
+
+                if (attempt2.length === 5) {
+                    line++
+                    disable()
+                    enable(3)
+                    checkAnswer(attempt2, selectedWord, line)
+                }
+            } else if (line === 3) {
+                const attempt3 = row3[0].value + row3[1].value + row3[2].value + row3[3].value + row3[4].value
+
+                if (attempt3.length === 5) {
+                    line++
+                    disable()
+                    enable(4)
+                    checkAnswer(attempt3, selectedWord, line)
+                }
+            } else if (line === 4) {
+                const attempt4 = row4[0].value + row4[1].value + row4[2].value + row4[3].value + row4[4].value
+
+                if (attempt4.length === 5) {
+                    line++
+                    disable()
+                    enable(5)
+                    checkAnswer(attempt4, selectedWord, line)
+                }
+            } else if (line === 5) {
+                const attempt5 = row5[0].value + row5[1].value + row5[2].value + row5[3].value + row5[4].value
+
+                if (attempt5.length === 5) {
+                    line++
+                    disable()
+                    checkAnswer(attempt5, selectedWord, line)
+                }
+
+            }
+        })
+
+        function disable() {
+            for (let i = 0; i < 5; i++) {
+                document.getElementsByClassName("row-1")[i].disabled = true;
+                document.getElementsByClassName("row-2")[i].disabled = true;
+                document.getElementsByClassName("row-3")[i].disabled = true;
+                document.getElementsByClassName("row-4")[i].disabled = true;
+                document.getElementsByClassName("row-5")[i].disabled = true;
+            }
+        }
+
+        function enable(num) {
+            for (let i = 0; i < 5; i++) {
+                document.getElementsByClassName("row-" + (+num))[i].disabled = false;
+            }
+        }
+
+        // function backspaceKey(anAttempt) {
+        //     let arr = anAttempt.split('')
+        //     arr.pop()
+        //     arr.join('')
+        //     return arr;
+        // }
+
+        //set up backspace
+        backspace.addEventListener("click", () => {
+            alert("click")
+        })
+
+
+    </script>
+
+</body>
+
+</html>
